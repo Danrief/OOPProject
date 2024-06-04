@@ -6,6 +6,12 @@ class Entity {
         this.def = def;
     }
 }
+class Weapon {
+    constructor(str, type) {
+        this.str = str;
+        this.type = type;
+    }
+}
 class PC extends Entity {
     constructor(name, hp, str, def) {
         super("Main Character", hp, str, def);
@@ -19,8 +25,13 @@ class PC extends Entity {
             }
     }
         mcdeath() {
-            console.log('Is this how my journey ends?');
+            console.log(`Is this how my journey ends?`);
     }
+        equip() {
+            if(true) {
+                this.str = this.str + WeaponType.str;
+            }
+        }
     }
 class NPC extends Entity {
     constructor(name, type, hp, str, def) {
@@ -37,19 +48,26 @@ class HostileNPC extends NPC {
             } 
         }
         edeath() {
-            console.log('This is not over... I promise!');
+            console.log(`This is not over... I promise!`);
         }
 }
 class NonHostileNPX extends NPC {
     OfferQuest() {
-        console.log('Would you like to help me for some gold, ${MainCharacter.name}?');
+        console.log(`Would you like to help me for some gold, ${MainCharacter.name}?`);
         return true;
     }
     GiveReward(PC) {
         if(this.OfferQuest(PC)) {
-        console.log('Here you go, ${MainCharacter.name}!');
+        console.log(`Here you go, ${MainCharacter.name}!`);
         }
     }
 }
 
+ class Sword extends Weapon {
+    constructor(str) {
+        this.str = 10;
+ }
+}
+
 let MainCharacter = new PC("Ethan", 100, 10, 5);
+let EnemyName = new HostileNPC("Bandit1", "bandit", 100, 8, 3)

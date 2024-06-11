@@ -12,7 +12,7 @@ class PC extends Entity {
         super("Main Character", hp, str, def);
         this.name = name;
         }
-        AttackEnemy (EnemyName) { 
+        attackEnemy (EnemyName) { 
             EnemyName.hp = EnemyName.hp + (EnemyName.hp/100 * EnemyName.def) - this.str;
             console.log(EnemyName.hp);
             if(EnemyName.hp <= 0) {
@@ -22,11 +22,6 @@ class PC extends Entity {
         mcdeath() {
             console.log(`Is this how my journey ends?`);
     }
-        equip() {
-            if(true) {
-                this.str = this.str + WeaponType.str;
-            }
-        }
     }
 class NPC extends Entity {
     constructor(name, type, hp, str, def) {
@@ -53,21 +48,21 @@ class HostileNPC extends NPC {
         }
 }
 class NonHostileNPX extends NPC {
-    OfferQuest() {
+    offerQuest() {
         console.log(`Would you like to help me for some gold, ${MainCharacter.name}?`);
         return true;
     }
-    GiveReward(PC) {
+    giveReward(PC) {
         if(this.OfferQuest(PC)) {
         console.log(`Here you go, ${MainCharacter.name}!`);
         }
     }
 }
 
-let MainCharacter = new PC("Ethan", 100, 10, 5);
-let hostile1 = new HostileNPC("hostile1","hostileNPC", 80, 1500, 3);
-let hostile2 = new HostileNPC("hostile2","hostileNPC", 50, 1500, 3);
-let hostile3 = new HostileNPC("hostile3","hostileNPC", 30, 1500, 3);
+let MainCharacter = new PC("Ethan", 1000, 3000, 5);
+let hostile1 = new HostileNPC("hostile1","hostileNPC", 80, 15, 3);
+let hostile2 = new HostileNPC("hostile2","hostileNPC", 50, 15, 3);
+let hostile3 = new HostileNPC("hostile3","hostileNPC", 30, 15, 3);
 
 let entities = [
     [MainCharacter],
@@ -75,7 +70,7 @@ let entities = [
 ]; 
 
 entities[0].forEach(entity => {
-    Entity.AttackEnemy(hostile2)
+    entity.attackEnemy(hostile2)
 });
 
 console.log(entities)

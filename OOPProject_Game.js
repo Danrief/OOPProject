@@ -56,7 +56,7 @@ class HostileNPC extends NPC {
     }
         }
 }
-class NonHostileNPX extends NPC {
+class NonHostileNPC extends NPC {
     offerQuest() {
         console.log(`Would you like to help me for some gold, ${MainCharacter.name}?`);
         return true;
@@ -69,10 +69,10 @@ class NonHostileNPX extends NPC {
 }
 
 let MainCharacter = new PC("Ethan", 100, 10, 5);
-let hostile1 = new HostileNPC("hostile1","hostileNPC", 80, 15, 3);
-let hostile2 = new HostileNPC("hostile2","hostileNPC", 50, 15, 3);
-let hostile3 = new HostileNPC("hostile3","hostileNPC", 30, 15, 3);
-let ShortSword = new Weapon("Sword", 30);
+let hostile1 = new HostileNPC("hostile1","Bandit", 80, 15, 3);
+let hostile2 = new HostileNPC("hostile2","Bandit", 50, 15, 3);
+let hostile3 = new HostileNPC("hostile3","Bandit", 30, 15, 3);
+let Sword = new Weapon("Short Sword", 30);
 let Dagger = new Weapon("Dagger", 15);
 
 let entities = [

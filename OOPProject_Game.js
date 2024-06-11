@@ -6,12 +6,7 @@ class Entity {
         this.def = def;
     }
 }
-class Weapon {
-    constructor(str, type) {
-        this.str = str;
-        this.type = type;
-    }
-}
+
 class PC extends Entity {
     constructor(name, hp, str, def) {
         super("Main Character", hp, str, def);
@@ -49,6 +44,12 @@ class HostileNPC extends NPC {
         }
         edeath() {
             console.log(`This is not over... I promise!`);
+            for(let i = 0; i<entities[1].length;i++){
+                if(this.name == entities[1][i].name){
+                    entities[1] = entities[1].filter(element => element.name !== "hostile1");
+                  break;
+        }
+    }
         }
 }
 class NonHostileNPX extends NPC {
@@ -63,11 +64,18 @@ class NonHostileNPX extends NPC {
     }
 }
 
- class Sword extends Weapon {
-    constructor(str) {
-        this.str = 10;
- }
-}
-
 let MainCharacter = new PC("Ethan", 100, 10, 5);
-let EnemyName = new HostileNPC("Bandit1", "bandit", 100, 8, 3)
+let hostile1 = new HostileNPC("hostile1","hostileNPC", 80, 1500, 3);
+let hostile2 = new HostileNPC("hostile2","hostileNPC", 50, 1500, 3);
+let hostile3 = new HostileNPC("hostile3","hostileNPC", 30, 1500, 3);
+
+let entities = [
+    [MainCharacter],
+    [hostile1, hostile2, hostile3],
+]; 
+
+entities[0].forEach(entity => {
+    Entity.AttackEnemy(hostile2)
+});
+
+console.log(entities)

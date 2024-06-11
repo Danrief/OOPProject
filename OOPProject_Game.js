@@ -7,13 +7,21 @@ class Entity {
     }
 }
 
+class Weapon {
+    constructor(type, damagebuff) {
+        this.type = type;
+        this.damagebuff = damagebuff;
+    }
+}
+
 class PC extends Entity {
     constructor(name, hp, str, def) {
         super("Main Character", hp, str, def);
         this.name = name;
         }
         attackEnemy (EnemyName) { 
-            EnemyName.hp = EnemyName.hp + (EnemyName.hp/100 * EnemyName.def) - this.str;
+            let Totaldamage = this.str + ShortSword.damagebuff; 
+            EnemyName.hp = EnemyName.hp + (EnemyName.hp/100 * EnemyName.def) - Totaldamage;
             console.log(EnemyName.hp);
             if(EnemyName.hp <= 0) {
                 EnemyName.edeath();
@@ -31,7 +39,8 @@ class NPC extends Entity {
 }
 class HostileNPC extends NPC {
         attack() {
-            MainCharacter.hp = MainCharacter.hp + (MainCharacter/100 * MainCharacter.def) - this.str;
+            let Totaldamage = this.str + Dagger.damagebuff;
+            MainCharacter.hp = MainCharacter.hp + (MainCharacter/100 * MainCharacter.def) - Totaldamage;
             console.log(MainCharacter.hp);
             if(MainCharacter.hp <= 0 ) {
                 MainCharacter.mcdeath();
@@ -59,10 +68,12 @@ class NonHostileNPX extends NPC {
     }
 }
 
-let MainCharacter = new PC("Ethan", 1000, 3000, 5);
+let MainCharacter = new PC("Ethan", 100, 10, 5);
 let hostile1 = new HostileNPC("hostile1","hostileNPC", 80, 15, 3);
 let hostile2 = new HostileNPC("hostile2","hostileNPC", 50, 15, 3);
 let hostile3 = new HostileNPC("hostile3","hostileNPC", 30, 15, 3);
+let ShortSword = new Weapon("Sword", 30);
+let Dagger = new Weapon("Dagger", 15);
 
 let entities = [
     [MainCharacter],

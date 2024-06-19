@@ -20,7 +20,7 @@ class PC extends Entity {
         this.name = name;
         }
         attackEnemy (EnemyName) { 
-            let Totaldamage = this.str + ShortSword.damagebuff; 
+            let Totaldamage = this.str + Weapon.damagebuff; 
             EnemyName.hp = EnemyName.hp + (EnemyName.hp/100 * EnemyName.def) - Totaldamage;
             console.log(EnemyName.hp);
             if(EnemyName.hp <= 0) {
@@ -39,7 +39,7 @@ class NPC extends Entity {
 }
 class HostileNPC extends NPC {
         attack() {
-            let Totaldamage = this.str + Dagger.damagebuff;
+            let Totaldamage = this.str + Weapon.damagebuff;
             MainCharacter.hp = MainCharacter.hp + (MainCharacter/100 * MainCharacter.def) - Totaldamage;
             console.log(MainCharacter.hp);
             if(MainCharacter.hp <= 0 ) {
@@ -62,7 +62,7 @@ class NonHostileNPC extends NPC {
         return true;
     }
     giveReward(PC) {
-        if(this.OfferQuest(PC)) {
+        if(this.offerQuest(PC)) {
         console.log(`Here you go, ${MainCharacter.name}!`);
         }
     }
@@ -72,6 +72,7 @@ let MainCharacter = new PC("Ethan", 100, 10, 5);
 let hostile1 = new HostileNPC("hostile1","Bandit", 80, 15, 3);
 let hostile2 = new HostileNPC("hostile2","Bandit", 50, 15, 3);
 let hostile3 = new HostileNPC("hostile3","Bandit", 30, 15, 3);
+let nonhostile = new NonHostileNPC("Nonhostile", "Villager", 30, 0, 1);
 let Sword = new Weapon("Short Sword", 30);
 let Dagger = new Weapon("Dagger", 15);
 
@@ -84,4 +85,27 @@ entities[0].forEach(entity => {
     entity.attackEnemy(hostile2)
 });
 
-console.log(entities)
+function test(){
+    console.log("Test 1. Attack reduces enemy hp");
+    MainCharacter.attackEnemy(hostile2)
+    console.assert(hostile2.hp < 50);
+
+    console.log("Tes2. Enemy death");
+    MainCharacter.attackEnemy(hostile3);
+    MainCharacter.attackEnemy(hostile3);
+    console.assert(hostile3.hp <= 0);
+
+    console.log("Test 3. Main character hp reduces");
+    hostile1.attack();
+    console.assert(MainCharacter.hp < 100);
+    
+    console.log("Test 4. Main characters death");
+    MainCharacter.hp = 1;
+    hostile1.attack();
+    console.assert(MainCharacter.hp <= 0);
+
+    console.log("Test 5. Non-hostile NPC quest offer");
+    nonhostile.giveReward(MainCharacter);
+}
+
+test();

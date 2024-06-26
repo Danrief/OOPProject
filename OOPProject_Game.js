@@ -5,6 +5,21 @@ class Entity {
         this.str = str;
         this.def = def;
     }
+
+    attack(target, weapon) {
+        let Totaldamage = this.str + weapon.damagebuff;
+        let Damage =  Totaldamage - (target.def / 100 * Totaldamage);
+        target.hp -= Damage;
+        console.log(`${target.name} has ${target.hp} left`);
+        if (target.hp < 0 ) {
+            target.death()
+        }
+    }
+
+    death() {
+        console.log(`${this.name} has died`)
+    }
+
 }
 
 class Weapon {
@@ -19,42 +34,25 @@ class PC extends Entity {
         super("Main Character", hp, str, def);
         this.name = name;
         }
-        attackEnemy (enemy, weapon) { 
-            let Totaldamage = this.str + weapon.damagebuff; 
-            enemy.hp -= Totaldamage - (enemy.def / 100 * Totaldamage);
-            console.log(enemy.hp);
-            if(enemy.hp <= 0) {
-                enemy.edeath();
-            }
+        death() {
+            console.log(`Is this how my journey ends?`)
+        }
     }
-        mcdeath() {
-            console.log(`Is this how my journey ends?`);
-    }
-    }
-class NPC extends Entity {
+
+    class NPC extends Entity {
     constructor(name, type, hp, str, def) {
         super(type, hp, str, def);
         this.name = name;
     }
 }
 class HostileNPC extends NPC {
-        attack(MainCharacter, weapon) {
-            let Totaldamage = this.str + weapon.damagebuff;
-            MainCharacter.hp -= Totaldamage - (MainCharacter.def / 100 * Totaldamage);
-            console.log(MainCharacter.hp);
-            if(MainCharacter.hp <= 0 ) {
-                MainCharacter.mcdeath();
-            } 
-        }
-        edeath() {
-            console.log(`This is not over... I promise!`);
-            for(let i = 0; i<entities[1].length;i++){
-                if(this.name == entities[1][i].name){
-                    entities[1] = entities[1].filter(element => element.name !== "hostile1");
-                  break;
-        }
+    constructor(name, type, hp, str, def) {
+        super(name, type, hp, str, def);
     }
-        }
+    death() {
+        console.log(`This is not over! I promise...`)
+        entities[1] = entities[1].filter(element => element.name !== this.name)
+    }
 }
 class NonHostileNPC extends NPC {
     offerQuest() {
@@ -81,18 +79,14 @@ let entities = [
     [hostile1, hostile2, hostile3],
 ]; 
 
-entities[0].forEach(entity => {
-    entity.attackEnemy(hostile2, Sword)
-});
-
 function test(){
     console.log("Test 1. Attack reduces enemy hp");
-    MainCharacter.attackEnemy(hostile2, Sword)
+    MainCharacter.attack(hostile2, Sword)
     console.assert(hostile2.hp < 50);
 
     console.log("Tes2. Enemy death");
-    MainCharacter.attackEnemy(hostile3, Sword);
-    MainCharacter.attackEnemy(hostile3, Sword);
+    MainCharacter.attack(hostile3, Sword);
+    MainCharacter.attack(hostile3, Sword);
     console.assert(hostile3.hp <= 0);
 
     console.log("Test 3. Main character hp reduces");

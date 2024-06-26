@@ -40,6 +40,8 @@ class PC extends Entity {
     constructor(name, hp, str, def) {
         super("Main Character", hp, str, def);
         this.name = name;
+        this.xp = 0;
+        this.lvl = 1;
         }
 
         death() {
@@ -52,6 +54,22 @@ class PC extends Entity {
         
         DamageReaction() {
         console.log(`Just a sratch!`)
+        }
+
+        gainXP(amount) {
+            this.xp += amount;
+            console.log(`${this.name} gains ${amount} XP.`)
+            if(this.xp >= this.lvl * 10) {
+                this.levelup();
+            }
+        }
+
+        levelup() {
+            this.lvl++;
+            this.hp += 10;
+            this.str += 2;
+            this.def += 1;
+            console.log(`${this.name} leveled up to the level ${this.lvl}!`)
         }
     }
 
@@ -144,6 +162,10 @@ function test(){
     MainCharacter.DamageReaction();
     hostile1.DamageReaction();
     nonhostile.DamageReaction();
+
+    console.log("Test 9. XP and leveling up system")
+    MainCharacter.gainXP(10);
+    console.assert(MainCharacter.lvl == 2);
 }
 
 test();

@@ -17,13 +17,16 @@ class Entity {
     }
 
     death() {
-        console.log(`${this.name} has died`)
+        console.log(`${this.name} has died.`)
     }
 
     action() {
         console.log(`${this.name} performed an action!`)
     }
 
+    DamageReaction() {
+        console.log(`${this.name} takes this damage.`)
+    }
 }
 
 class Weapon {
@@ -46,6 +49,10 @@ class PC extends Entity {
         action() {
             console.log(`${this.name} performed a heroic action!`)
         }
+        
+        DamageReaction() {
+        console.log(`Just a sratch!`)
+        }
     }
 
     class NPC extends Entity {
@@ -66,6 +73,10 @@ class HostileNPC extends NPC {
 
     action() {
         console.log(`${this.name} performed a mischievous action!`)
+    }
+    
+    DamageReaction() {
+        console.log(`You will regret this!`)
     }
 }
 class NonHostileNPC extends NPC {
@@ -128,6 +139,11 @@ function test(){
     MainCharacter.action();
     hostile1.action();
     nonhostile.action();
+
+    console.log("Test 7. Damage reaction");
+    MainCharacter.DamageReaction();
+    hostile1.DamageReaction();
+    nonhostile.DamageReaction();
 }
 
 test();

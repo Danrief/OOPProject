@@ -20,6 +20,10 @@ class Entity {
         console.log(`${this.name} has died`)
     }
 
+    action() {
+        console.log(`${this.name} performed an action!`)
+    }
+
 }
 
 class Weapon {
@@ -34,8 +38,13 @@ class PC extends Entity {
         super("Main Character", hp, str, def);
         this.name = name;
         }
+
         death() {
             console.log(`Is this how my journey ends?`)
+        }
+
+        action() {
+            console.log(`${this.name} performed a heroic action!`)
         }
     }
 
@@ -49,20 +58,34 @@ class HostileNPC extends NPC {
     constructor(name, type, hp, str, def) {
         super(name, type, hp, str, def);
     }
+
     death() {
         console.log(`This is not over! I promise...`)
         entities[1] = entities[1].filter(element => element.name !== this.name)
     }
+
+    action() {
+        console.log(`${this.name} performed a mischievous action!`)
+    }
 }
 class NonHostileNPC extends NPC {
+    constructor(name, type, hp, str, def) {
+        super(name, type, hp, str, def);
+    }
+
     offerQuest() {
         console.log(`Would you like to help me for some gold, ${MainCharacter.name}?`);
         return true;
     }
+
     giveReward(PC) {
         if(this.offerQuest(PC)) {
         console.log(`Here you go, ${MainCharacter.name}!`);
         }
+    }
+
+    action() {
+        console.log(`${this.name} performed a friendly action!`)
     }
 }
 
@@ -100,6 +123,11 @@ function test(){
 
     console.log("Test 5. Non-hostile NPC quest offer");
     nonhostile.giveReward(MainCharacter);
+
+    console.log("Test 6. Actions")
+    MainCharacter.action();
+    hostile1.action();
+    nonhostile.action();
 }
 
 test();

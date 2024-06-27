@@ -4,6 +4,7 @@ class Entity {
         this. hp = hp;
         this.str = str;
         this.def = def;
+        this.inventory = [];
     }
 
     attack(target, weapon) {
@@ -27,12 +28,40 @@ class Entity {
     DamageReaction() {
         console.log(`${this.name} takes this damage.`)
     }
+
+    AddItem(item) {
+        this.inventory.push(item);
+        console.log(`${item.name} has been added to the inventory.`)
+    }
+
+    UseItem(ItemName) {
+        const ItemIndex = this.inventory.findIndex(item => item.name == ItemName);
+        if (ItemIndex >= 0) {
+            const item = this.inventory[ItemIndex];
+            item.use(this);
+            this.inventory.splice(ItemIndex, 1);
+        }
+        else {
+            console.log(`${ItemName} not found.`)
+        }
+    }
 }
 
 class Weapon {
     constructor(type, damagebuff) {
         this.type = type;
         this.damagebuff = damagebuff;
+    }
+}
+
+class HealthPotions {
+    constructor(name, regen) {
+        this.name = name;
+        this.regen = regen;
+    }
+    use(target) {
+        target.hp += this.regen;
+        console.log(`${target.name} restored ${this.regen} HP.`)
     }
 }
 
@@ -125,11 +154,16 @@ let hostile3 = new HostileNPC("hostile3","Bandit", 30, 15, 3);
 let nonhostile = new NonHostileNPC("Nonhostile", "Villager", 30, 0, 1);
 let Sword = new Weapon("Short Sword", 30);
 let Dagger = new Weapon("Dagger", 15);
+let SmallHeal = new HealthPotions("Small Health Potion", 20);
+let LargeHeal = new HealthPotions("Large Health Potion", 40);
 
 let entities = [
     [MainCharacter],
     [hostile1, hostile2, hostile3],
 ]; 
+
+MainCharacter.AddItem(SmallHeal);
+MainCharacter.AddItem(LargeHeal);
 
 function test(){
     console.log("Test 1. Attack reduces enemy hp");
@@ -163,9 +197,16 @@ function test(){
     hostile1.DamageReaction();
     nonhostile.DamageReaction();
 
-    console.log("Test 9. XP and leveling up system")
+    console.log("Test 9. XP and leveling up system");
     MainCharacter.gainXP(10);
     console.assert(MainCharacter.lvl == 2);
+
+    console.log("Test 10. Potions of health");
+    MainCharacter.hp = 50;
+    MainCharacter.UseItem("Small Health Potion");
+    console.assert(MainCharacter.hp == 70)
+    MainCharacter.UseItem("Large Health Potion");
+    console.assert(MainCharacter.hp == 110);
 }
 
 test();

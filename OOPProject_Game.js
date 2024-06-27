@@ -61,7 +61,7 @@ class HealthPotions {
     }
     use(target) {
         target.hp += this.regen;
-        console.log(`${target.name} restored ${this.regen} HP.`)
+        console.log(`${target.name} restored ${this.regen} HP. ${target.name} Now has ${target.hp} HP.`)
     }
 }
 
@@ -207,6 +207,7 @@ function test(){
     console.assert(MainCharacter.hp == 70)
     MainCharacter.UseItem("Large Health Potion");
     console.assert(MainCharacter.hp == 110);
+    MainCharacter.UseItem("Small Health Potion");
 }
 
 test();

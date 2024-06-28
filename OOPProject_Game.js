@@ -82,7 +82,7 @@ class PC extends Entity {
         }
         
         DamageReaction() {
-        console.log(`Just a sratch!`)
+        console.log(`Just a scratch!`)
         }
 
         gainXP(amount) {
@@ -114,7 +114,7 @@ class HostileNPC extends NPC {
     }
 
     death() {
-        console.log(`This is not over! I promise...`)
+        console.log(`This is not the end! I promise...`)
         entities[1] = entities[1].filter(element => element.name !== this.name)
     }
 
